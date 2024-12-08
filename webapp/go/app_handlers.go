@@ -594,14 +594,17 @@ func appPostRideEvaluatation(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusInternalServerError, err)
 		return
 	}
-	_, err = tx.ExecContext(
-		ctx,
-		`UPDATE chairs SET is_free = 1 WHERE id = ?`,
-		ride.ChairID)
-	if err != nil {
-		writeError(w, http.StatusInternalServerError, err)
-		return
-	}
+
+	/*
+		_, err = tx.ExecContext(
+			ctx,
+			`UPDATE chairs SET is_free = 1 WHERE id = ?`,
+			ride.ChairID)
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, err)
+			return
+		}
+	*/
 
 	if err := tx.GetContext(ctx, ride, `SELECT * FROM rides WHERE id = ?`, rideID); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
