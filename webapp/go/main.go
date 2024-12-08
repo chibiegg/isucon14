@@ -29,7 +29,7 @@ func main() {
 
 	go func() {
 		slog.Info("pprof")
-		http.ListenAndServe("localhost:6060", nil)
+		http.ListenAndServe(":6060", nil)
 	}()
 	slog.Info("Listening on :8080")
 	go func() {
