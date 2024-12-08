@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log/slog"
 )
 
 var ErrNoChairs = fmt.Errorf("no chairs")
@@ -59,6 +60,7 @@ func getChairNotification(ctx context.Context, chair *Chair) (*chairGetNotificat
 			ride.ChairID); err != nil {
 			return nil, err
 		}
+		slog.Info("chair is free", "chair_id", ride.ChairID)
 	}
 
 	if err := tx.Commit(); err != nil {
