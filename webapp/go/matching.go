@@ -25,6 +25,9 @@ func runMatching() {
 		if errors.Is(err, sql.ErrNoRows) {
 			slog.Info("no chairs")
 			return
+		} else {
+			slog.Info("match error 2")
+			return
 		}
 	}
 

@@ -596,7 +596,7 @@ func appPostRideEvaluatation(w http.ResponseWriter, r *http.Request) {
 	}
 	_, err = tx.ExecContext(
 		ctx,
-		`UPDATE chairs SET is_free = 1 WHERE chair_id = ?`,
+		`UPDATE chairs SET is_free = 1 WHERE id = ?`,
 		ride.ChairID)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, err)
