@@ -13,7 +13,7 @@ func runMatching() {
 	ride := &Ride{}
 	if err := db.GetContext(ctx, ride, `SELECT * FROM rides WHERE chair_id IS NULL ORDER BY created_at LIMIT 1`); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			slog.Error("no rides", "error", err)
+			slog.Info("no rides")
 			return
 		}
 		slog.Error("match error 1", "error", err)

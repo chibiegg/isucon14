@@ -57,7 +57,7 @@ func getChairNotification(ctx context.Context, chair *Chair) (*chairGetNotificat
 		if _, err := tx.ExecContext(
 			ctx,
 			`UPDATE chairs SET is_free = 1 WHERE id = ?`,
-			ride.ChairID); err != nil {
+			ride.ChairID.String); err != nil {
 			return nil, err
 		}
 		slog.Info("chair is free", "chair_id", ride.ChairID)
