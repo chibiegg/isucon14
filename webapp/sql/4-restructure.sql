@@ -30,4 +30,4 @@ LEFT JOIN (SELECT chair_id,
 
 WHERE total_distance_updated_at IS NOT NULL;
 
-ALTER TABLE chairs ADD COLUMN is_free BOOLEAN NOT NULL DEFAULT 1 COMMENT '乗れるかどうか' AFTER is_active,
+ALTER TABLE chairs ADD COLUMN is_free BOOLEAN NOT NULL DEFAULT 1 COMMENT '乗れるかどうか' AFTER is_active;
