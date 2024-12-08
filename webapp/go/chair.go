@@ -19,7 +19,7 @@ func getChairNotification(ctx context.Context, chair *Chair) (*chairGetNotificat
 	ride := &Ride{}
 	yetSentRideStatus := RideStatus{}
 
-	if err := tx.GetContext(ctx, ride, `SELECT * FROM rides WHERE chair_id = ? ORDER BY updated_at DESC LIMIT 1`, chair.ID); err != nil {
+	if err := tx.GetContext(ctx, ride, `SELECT * FROM rides WHERE chair_id = ? ORDER BY created_by DESC LIMIT 1`, chair.ID); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, ErrNoChairs
 		}
