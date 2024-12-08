@@ -29,3 +29,5 @@ LEFT JOIN (SELECT chair_id,
             GROUP BY chair_id) distance_table ON distance_table.chair_id = chairs.id
 
 WHERE total_distance_updated_at IS NOT NULL;
+
+ALTER TABLE chairs ADD COLUMN is_free BOOLEAN NOT NULL DEFAULT 1 COMMENT '乗れるかどうか' AFTER is_active,
