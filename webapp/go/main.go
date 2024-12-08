@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/exec"
 	"strconv"
@@ -25,6 +26,11 @@ var appNotifyMs int
 
 func main() {
 	mux := setup()
+
+	go func() {
+		slog.Info("pprof")
+		http.ListenAndServe("localhost:6060", nil)
+	}()
 	slog.Info("Listening on :8080")
 	go func() {
 		ticker := time.NewTicker(500 * time.Millisecond)
