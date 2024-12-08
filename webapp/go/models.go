@@ -62,7 +62,7 @@ type Ride struct {
 }
 
 type RideStatusAndEval struct {
-	Evaluation  int        `db:"evaluation"`
+	Evaluation  *int       `db:"evaluation"`
 	ID          string     `db:"id"`
 	RideID      string     `db:"ride_id"`
 	Status      string     `db:"status"`
