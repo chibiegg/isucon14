@@ -874,7 +874,7 @@ func getChairStats(ctx context.Context, tx *sqlx.Tx, chairID string) (appGetNoti
 		}
 
 		totalRideCount++
-		totalEvaluation += rideStatus.Evaluation
+		totalEvaluation += *rideStatus.Evaluation
 	}
 
 	stats.TotalRidesCount = totalRideCount
