@@ -39,7 +39,7 @@ func runMatching() {
 	if _, err := db.ExecContext(
 		ctx,
 		`UPDATE chairs SET is_free = 0 WHERE id = ?`,
-		ride.ChairID); err != nil {
+		matched.ID); err != nil {
 		slog.Error("failed to update chairs", "error", err)
 		return
 	}
