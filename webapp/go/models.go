@@ -14,7 +14,7 @@ type Chair struct {
 	AccessToken string    `db:"access_token"`
 	CreatedAt   time.Time `db:"created_at"`
 	UpdatedAt   time.Time `db:"updated_at"`
-	isFree      bool      `db:"is_free"`
+	IsFree      bool      `db:"is_free"`
 }
 
 type ChairModel struct {
