@@ -61,6 +61,16 @@ type Ride struct {
 	UpdatedAt            time.Time      `db:"updated_at"`
 }
 
+type RideStatusAndEval struct {
+	Evaluation  int        `db:"evaluation"`
+	ID          string     `db:"id"`
+	RideID      string     `db:"ride_id"`
+	Status      string     `db:"status"`
+	CreatedAt   time.Time  `db:"created_at"`
+	AppSentAt   *time.Time `db:"app_sent_at"`
+	ChairSentAt *time.Time `db:"chair_sent_at"`
+}
+
 type RideStatus struct {
 	ID          string     `db:"id"`
 	RideID      string     `db:"ride_id"`
@@ -105,5 +115,5 @@ type ChairLocationLatest struct {
 	Longitude     int       `db:"longitude"`
 	UpdatedAt     time.Time `db:"updated_at"`
 	TotalDistance int       `db:"total_distance"`
-	isDirty	      bool
+	isDirty       bool
 }
