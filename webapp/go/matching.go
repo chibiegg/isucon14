@@ -43,4 +43,5 @@ func runMatching() {
 		slog.Error("failed to update chairs", "error", err)
 		return
 	}
+	slog.Info("matched", "ride_id", ride.ID, "chair_id", matched.ID)
 }

@@ -56,7 +56,7 @@ func getChairNotification(ctx context.Context, chair *Chair) (*chairGetNotificat
 	if yetSentRideStatus.Status == "COMPLETED" {
 		if _, err := tx.ExecContext(
 			ctx,
-			`UPDATE chairs SET is_free = 1 WHERE id = ?`,
+			`UPDATE chairs SET is_free = TRUE WHERE id = ?`,
 			ride.ChairID.String); err != nil {
 			return nil, err
 		}
