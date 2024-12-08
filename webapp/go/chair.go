@@ -52,6 +52,13 @@ func getChairNotification(ctx context.Context, chair *Chair) (*chairGetNotificat
 		}
 	}
 
+	if _, err := tx.ExecContext(
+		ctx,
+		`UPDATE chairs SET is_free = 1 WHERE id = ?`,
+		ride.ChairID); err != nil {
+		return nil, err
+	}
+
 	if err := tx.Commit(); err != nil {
 		return nil, err
 	}
