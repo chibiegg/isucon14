@@ -840,31 +840,20 @@ func appGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 func getChairStats(ctx context.Context, tx *sqlx.Tx, chairID string) (appGetNotificationResponseChairStats, error) {
 	stats := appGetNotificationResponseChairStats{}
 
-	rides := []Ride{}
+	totalRideCount := 0
+	totalEvaluation := 0
+	rideStatuses := []RideStatusAndEval{}
 	err := tx.SelectContext(
 		ctx,
-		&rides,
-		`SELECT * FROM rides WHERE chair_id = ? ORDER BY updated_at DESC`,
+		&rideStatuses,
+		`SELECT rides.evaluation AS evaluation, ride_statuses.id AS id,ride_statuses.ride_id AS ride_id, ride_statuses.status AS status,ride_statuses.created_at AS created_at,ride_statuses.app_sent_at AS app_sent_at,ride_statuses.chair_sent_at AS chair_sent_at FROM ride_statuses INNER JOIN rides ON ride_statuses.ride_id=rides.id WHERE rides.chair_id = ? ORDER BY created_at`,
 		chairID,
 	)
 	if err != nil {
 		return stats, err
 	}
 
-	totalRideCount := 0
-	totalEvaluation := 0.0
-	for _, ride := range rides {
-		rideStatuses := []RideStatus{}
-		err = tx.SelectContext(
-			ctx,
-			&rideStatuses,
-			`SELECT * FROM ride_statuses WHERE ride_id = ? ORDER BY created_at`,
-			ride.ID,
-		)
-		if err != nil {
-			return stats, err
-		}
-
+	for _, rideStatus := range rideStatuses {
 		var arrivedAt, pickupedAt *time.Time
 		var isCompleted bool
 		for _, status := range rideStatuses {
@@ -885,12 +874,12 @@ func getChairStats(ctx context.Context, tx *sqlx.Tx, chairID string) (appGetNoti
 		}
 
 		totalRideCount++
-		totalEvaluation += float64(*ride.Evaluation)
+		totalEvaluation += *rideStatus.Evaluation
 	}
 
 	stats.TotalRidesCount = totalRideCount
 	if totalRideCount > 0 {
-		stats.TotalEvaluationAvg = totalEvaluation / float64(totalRideCount)
+		stats.TotalEvaluationAvg = float64(totalEvaluation) / float64(totalRideCount)
 	}
 
 	return stats, nil
